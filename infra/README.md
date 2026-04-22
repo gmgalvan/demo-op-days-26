@@ -2,12 +2,12 @@
 
 La infraestructura del proyecto esta dividida en dos carpetas:
 
-- [infra/ec2](/home/gmgalvan/demo-open-days-2026/infra/ec2) para desplegar la app en una instancia EC2
-- [infra/ecr](/home/gmgalvan/demo-open-days-2026/infra/ecr) para crear un repositorio ECR y explicar versionamiento de imagenes
+- [infra/ec2](demo-open-days-2026/infra/ec2) para desplegar la app en una instancia EC2
+- [infra/ecr](demo-open-days-2026/infra/ecr) para crear un repositorio ECR y explicar versionamiento de imagenes
 
 ## EC2
 
-La configuracion de [infra/ec2](/home/gmgalvan/demo-open-days-2026/infra/ec2) usa:
+La configuracion de [infra/ec2](demo-open-days-2026/infra/ec2) usa:
 
 - una instancia **EC2**
 - una llave **.pem** generada por Terraform
@@ -16,7 +16,7 @@ La configuracion de [infra/ec2](/home/gmgalvan/demo-open-days-2026/infra/ec2) us
 
 ## ECR
 
-La configuracion de [infra/ecr](/home/gmgalvan/demo-open-days-2026/infra/ecr) usa:
+La configuracion de [infra/ecr](demo-open-days-2026/infra/ecr) usa:
 
 - un repositorio **Amazon ECR**
 - tags inmutables por defecto
@@ -43,4 +43,4 @@ terraform init
 terraform apply
 ```
 
-Los detalles y variables estan documentados en [infra/ec2/README.md](/home/gmgalvan/demo-open-days-2026/infra/ec2/README.md) y [infra/ecr/README.md](/home/gmgalvan/demo-open-days-2026/infra/ecr/README.md).
+Los detalles y variables estan documentados en [infra/ec2/README.md](demo-open-days-2026/infra/ec2/README.md) y [infra/ecr/README.md](demo-open-days-2026/infra/ecr/README.md).

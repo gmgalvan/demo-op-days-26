@@ -113,8 +113,8 @@ Puedes explicar el flujo asi:
 - [launchSettings.json](HolaMicroservicio/Properties/launchSettings.json:1) define la configuracion de desarrollo y los puertos
 - [appsettings.json](HolaMicroservicio/appsettings.json:1) contiene configuracion general
 - [appsettings.Development.json](HolaMicroservicio/appsettings.Development.json:1) contiene configuracion para ambiente de desarrollo
-- [.github/workflows/](/home/gmgalvan/demo-open-days-2026/.github/workflows) contiene los pipelines de GitHub Actions
-- [infra/ec2/](/home/gmgalvan/demo-open-days-2026/infra/ec2) contiene Terraform para desplegar en AWS EC2
+- [.github/workflows/](demo-open-days-2026/.github/workflows) contiene los pipelines de GitHub Actions
+- [infra/ec2/](demo-open-days-2026/infra/ec2) contiene Terraform para desplegar en AWS EC2
 
 ## Explicacion rapida del codigo
 
@@ -220,8 +220,8 @@ Si quieres mostrar CI/CD en clase, una forma clara de explicarlo es separar el f
 
 En este repositorio quedaron dos workflows:
 
-- [.github/workflows/ci.yml](/home/gmgalvan/demo-open-days-2026/.github/workflows/ci.yml:1)
-- [.github/workflows/deploy-ec2.yml](/home/gmgalvan/demo-open-days-2026/.github/workflows/deploy-ec2.yml:1)
+- [.github/workflows/ci.yml](demo-open-days-2026/.github/workflows/ci.yml:1)
+- [.github/workflows/deploy-ec2.yml](demo-open-days-2026/.github/workflows/deploy-ec2.yml:1)
 
 ### Que hace el pipeline de CI
 
