@@ -4,7 +4,17 @@ on:
   push:
     branches:
       - master
+    tags:
+      - "v*"
   pull_request:
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: hola-microservicio
 
 jobs:
   build:
@@ -27,3 +37,58 @@ jobs:
 
       - name: Publish
         run: dotnet publish HolaMicroservicio/HolaMicroservicio.csproj --configuration Release --no-build --output ./artifacts/publish
+
+      - name: Set image version
+        id: version
+        shell: bash
+        run: |
+          SHORT_SHA="${GITHUB_SHA::7}"
+          IMAGE_TAG="sha-${SHORT_SHA}"
+
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            IMAGE_TAG="${GITHUB_REF_NAME}"
+          fi
+
+          echo "image_tag=${IMAGE_TAG}" >> "$GITHUB_OUTPUT"
+          echo "sha_tag=sha-${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+
+      - name: Configure AWS credentials
+        if: github.event_name != 'pull_request'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+
+      - name: Login to Amazon ECR
+        if: github.event_name != 'pull_request'
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker image
+        if: github.event_name != 'pull_request'
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build \
+            -t $REGISTRY/${{ env.ECR_REPOSITORY }}:${{ steps.version.outputs.sha_tag }} \
+            .
+
+      - name: Tag release image
+        if: github.event_name != 'pull_request' && github.ref_type == 'tag'
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker tag \
+            $REGISTRY/${{ env.ECR_REPOSITORY }}:${{ steps.version.outputs.sha_tag }} \
+            $REGISTRY/${{ env.ECR_REPOSITORY }}:${{ steps.version.outputs.image_tag }}
+
+      - name: Push image to ECR
+        if: github.event_name != 'pull_request'
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker push $REGISTRY/${{ env.ECR_REPOSITORY }}:${{ steps.version.outputs.sha_tag }}
+
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            docker push $REGISTRY/${{ env.ECR_REPOSITORY }}:${{ steps.version.outputs.image_tag }}
+          fi
