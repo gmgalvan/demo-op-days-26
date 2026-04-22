@@ -1,0 +1,8 @@
+aws_region      = "us-east-1"
+project_name    = "hola-microservicio"
+instance_type   = "t3.micro"
+ssh_cidr_blocks = ["0.0.0.0/0"]
+app_cidr_blocks = ["0.0.0.0/0"]
+app_port        = 8080
+public_key_name = "hola-microservicio-key"
+pem_output_path = "keys/hola-microservicio.pem"

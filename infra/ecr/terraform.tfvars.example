@@ -1,0 +1,12 @@
+aws_region           = "us-east-1"
+project_name         = "hola-microservicio"
+repository_name      = "hola-microservicio"
+image_tag_mutability = "IMMUTABLE"
+scan_on_push         = true
+keep_tagged_images   = 10
+keep_untagged_images = 3
+
+tags = {
+  Environment = "demo"
+  Owner       = "open-days"
+}
